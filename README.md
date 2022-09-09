@@ -10,7 +10,7 @@ I aimed at working on a throw-away project by reproducing an existing app.
 I chose the tomato timer app found online.
 Here is a screen capture of its main user interface:
 
-(Screenshot)
+![Screenshot of Toptal's TomatoTimer](docs/assets/Toptal_tomato_timer_2022-09-09.png)
 
 My goal is not to reproduce this timer app in its entirety,
 but to create a simpler alternative with its main features such as:
@@ -32,11 +32,11 @@ but to create a simpler alternative with its main features such as:
 
 Other inspirations:
 
-**Apple timer**
+**Apple Clock timer**
 
-|   |   |
-|---|---|
-|(Screenshot)|(Screenshot)|
+| Setup                                                                        | Running                                                                        |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| ![Screenshot of Apple's Clock timer (setup)](docs/assets/Apple_timer_01.PNG) | ![Screenshot of Apple's Clock timer (running)](docs/assets/Apple_timer_02.PNG) |
 
 - Initial state displays the input for setting the amount of time
 - Timing state displays progress using a depleting circle
@@ -45,18 +45,18 @@ Other inspirations:
 
 **Apple Music player**
 
-|   |   |
-|---|---|
-|(Screenshot)|(Screenshot)|
+| Paused                                                                  | Playing                                                                  |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| ![Apple's Music player (paused)](docs/assets/Apple_music_player_01.PNG) | ![Apple's Music player (playing)](docs/assets/Apple_music_player_02.PNG) |
 
 - Playing state zooms in on the cover when transitioning from paused state.
-- Progress bar is linear with small indicator minus sign (-0:10)
+- Progress bar is linear with small indicator minus sign (-2:36)
 
 **Audible player**
 
-|   |   |   |
-|---|---|---|
-|(Screenshot)|(Screenshot)|(Screenshot)
+| Paused                                                          | Playing                                                          | Settings overlay                                                        | Settings menu                                                        |
+| --------------------------------------------------------------- | ---------------------------------------------------------------- | ----------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| ![Audible's player (paused)](docs/assets/Audible_player_01.PNG) | ![Audible's player (playing)](docs/assets/Audible_player_02.PNG) | ![Audible's player settings overlay](docs/assets/Audible_player_03.PNG) | ![Audible's player settings menu](docs/assets/Audible_player_04.PNG) |
 
 **Dribble _timer_ tag**
 
@@ -123,4 +123,3 @@ Functionality:
 1. Fix bugs
 1. Tag version 1
 1. Retrospective
-
