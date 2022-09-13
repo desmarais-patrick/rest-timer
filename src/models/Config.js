@@ -1,4 +1,4 @@
-export default function Config(allTranslations, defaultPresets) {
+export default function Config(allTranslations, defaultPresets, icons) {
 
     function generateConfig(langCode, defaultLangCode) {
         const selectedLangCode = typeof allTranslations[langCode] !== "undefined" ?
@@ -7,7 +7,9 @@ export default function Config(allTranslations, defaultPresets) {
 
         return {
             translations,
-            selectedLangCode,
+            translationsLangCode: selectedLangCode,
+
+            icons,
 
             defaultPresets,
         };

@@ -48,6 +48,8 @@ from existing applications found on iOS mobile apps.
 
 - Initial state displays the input for setting the amount of time
 - Timing state displays progress using a depleting circle
+- Timing state displays when alarm will end (time of day)
+  - When alarm will end becomes grey when paused
 - "Cancel" is used instead of "Stop" or "Pause"
 - Color is used between "Start" / "Pause" button states
 
