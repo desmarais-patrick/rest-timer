@@ -35,6 +35,11 @@ Browser states:
 - First load in browser
 - Load after changing settings
 
+Browser features:
+
+- No JavaScript: message requesting enabling JavaSript
+- No LocalStorage: warning in Settings screen for next visit
+
 Resolutions:
 
 - Desktop 1366x768

@@ -1,34 +1,44 @@
 # Analysis
 
-## Motivation
+## Inspiration
 
-This project originates from practicing using the popular React front-end library.
-As Dave Ceddia's article about learning this learning suggests,
-I aimed at working on a throw-away project by reproducing an existing app.
-I chose the tomato timer app found online.
+This project's origin comes from practicing using the popular React front-end library for web application development.
+
+Reading Dave Ceddia's article on learning React.js,
+this throw-away project was created to reproduce an existing app.
+I chose the tomato timer app found online,
+which I found useful for a reminder to take breaks.
+
 Here is a screen capture of its main user interface:
 
 ![Screenshot of Toptal's TomatoTimer](assets/Toptal_tomato_timer_2022-09-09.png)
+
+Although this timer was built to support the pomodoro technique,
+in which small stretches of time are dedicated for focus work,
+followed by periods of variable rest.
 
 My goal is not to reproduce this timer app in its entirety,
 but to create a simpler alternative with its main features such as:
 
 - Initialize a timer with a default preset value
-- Three action buttons: start/pause, reset
-- Time left on timer updating...
-  - Every minute or so when above 5 minutes
-  - Every 10 seconds or so when between 1 and 5 minutes
-  - Every second or so when below 1 minute
-- Text displaying timer state, i.e. "Started", "Paused", "Ready" (and its selected preset once started or paused)
-- Text displaying current time of day
-- Display notification when timer is up!
-- Play audio tone when timer is up!
-- Display three preset timer buttons: big (ex. 30 minutes; default), medium (ex. 15 minutes), small (ex. 3 minutes)
-- Customize timer preset values
-- Customize labels for preset value buttons
+- Three action buttons: start, stop, and reset
+- Time left on timer updating every second (or so)
+- Selected timer and clear timer state with a time refresh every second
+- Display notification and play audio tone when timer is up!
+- Display three preset timer buttons:
+  big (ex. 30 minutes; default),
+  medium (ex. 15 minutes),
+  small (ex. 3 minutes)
+- Customize timer preset values (maybe also labels)
 - Space bar shortcut to toggle play-pause state
 
-## Inspirations
+To create contrast with the pomodoro technique,
+this timer would be aimed for rest reminders.
+
+## Research
+
+To make a different interface, the following inspirations were drawn
+from existing applications found on iOS mobile apps.
 
 **Apple Clock timer**
 
@@ -86,7 +96,7 @@ Further considerations:
 - Choose sound volume
 - Customize sound per preset (ex. paper to garbage, coffee ready, call from The Rock or famous movie quote)
 
-## Analysis
+## Specifications
 
 Features:
 
@@ -112,14 +122,33 @@ Functionality:
 
 ## Project plan
 
-1. User interface design
-1. Architecture design
-1. Write test cases
-1. Tooling setup (ex. time tracking, dev env)
-1. Code static prototype
-1. Prepare and integrate assets (icons, media, etc.)
-1. Code rest of features
+1. User interface design ✅
+1. Architecture design ✅
+1. Write test cases (first draft ✅)
+1. Tooling setup (ex. time tracking ✅, dev env ✅)
+1. Code (static prototype)
+1. Prepare and integrate assets (icons 🚥, media 🚥, etc.)
+1. Code (rest of features and functionality)
 1. Review test cases and test
 1. Fix bugs
 1. Tag version 1
 1. Retrospective
+
+**Time Tracking**
+
+| Step                       | Time invested (h) |
+| -------------------------- | ----------------- |
+| Project initialization     | 1.25              |
+| User interface design      | 2.25              |
+| Architecture design        | 3                 |
+| Test cases                 | 0.25              |
+| Tooling setup              | 0.5               |
+| User interface assets      | 0.5               |
+| Extra (ex. tool debugging) | 1.25              |
+
+Total: 9 hours (2022-09-13 13:00)
+
+Tool debugging:
+
+- Push to Github blocks when file > 1MB.
+  Solution: reset commits, compress sketch image.

@@ -201,3 +201,5 @@ onBlur removes spaces and extra zeroes.
 1. Testing:
    - Features in Chrome
    - Other browsers on macOS and iOS
+   - Disable JavaScript
+   - Disable LocalStorage
