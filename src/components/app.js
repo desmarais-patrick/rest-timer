@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import allTranslations from "../config/Translations.js";
-import defaultPresets from "../config/DefaultPresets.js";
+import TimerPresets from "../config/TimerPresets.js";
 import icons from "../config/Icons.js";
 
 import Config from "../models/Config.js";
@@ -9,10 +9,11 @@ import Config from "../models/Config.js";
 import RestTimer from "../components/RestTimer.jsx";
 
 function useAppState(defaultLangCode, defaultPresets, defaultPresetIndex) {
-    const [state, setState] = useState({
-        selectedLangCode: defaultLangCode,
-        presets: defaultPresets,
-        selectedPreset: defaultPresetIndex,
+    const [langCode, setLangCode] = useState(defaultLangCode);
+    const [presets, setPresets] = useState({
+        collection: defaultPresets,
+        defaultPresetsOn: true,
+        selectedPresetIndex: defaultPresetIndex,
     });
 
     useEffect(() => {
@@ -20,52 +21,57 @@ function useAppState(defaultLangCode, defaultPresets, defaultPresetIndex) {
         const rand = Math.random() * 10;
         const detectedLangCode = (rand < 5) ? "en" : "fr";
 
-        if (state.selectedLangCode !== detectedLangCode) {
-            setState(state => ({
-                ...state,
-                selectedLangCode: detectedLangCode,
-            }));
+        if (langCode !== detectedLangCode) {
+            setLangCode(detectedLangCode);
+            if (presets.defaultPresetsOn) {
+                const newPresets = TimerPresets.generateDefaultPresets(allTranslations[detectedLangCode]);
+                setPresets(presets => ({
+                    ...presets,
+                    collection: newPresets,
+                }));
+            }
         }
-    }, [state.selectedLangCode]);
+    }, [langCode]); // presets is not dependency once user edits it.
 
     useEffect(() => {
         // Read saved presets.
         const rand = Math.random() * 10;
         const savedPresets = (rand < 5) ? null : [
             ["A", 25, "Pomodoro"],
-            ["B", 5, "Move"],
-            ["C", 15, "Long break"]
+            ["B", 5, "🏃🏻‍♂️💨"],
+            ["C", 15, "⌛️"]
         ];
 
         if (savedPresets === null) {
             return;
         }
 
-        setState(state => ({
-            ...state,
-            presets: savedPresets,
+        setPresets(presets => ({
+            ...presets,
+            collection: savedPresets,
+            defaultPresetsOn: false,
         }));
-    }, [state.presets]);
+    }, [presets]);
 
-    return { state };
+    return { langCode, presets };
 }
 
 export default function App() {
     const defaultLangCode = "en";
+    const defaultPresets = TimerPresets.generateDefaultPresets(allTranslations[defaultLangCode]);
     const defaultPresetIndex = 0;
-    const { state } = useAppState(defaultLangCode, defaultPresets, defaultPresetIndex);
+    const { langCode, presets } = useAppState(defaultLangCode, defaultPresets, defaultPresetIndex);
 
     const config = new Config(allTranslations, defaultPresets, icons);
-    const timerConfig = config.generateConfig(state.selectedLangCode,
-        defaultLangCode);
+    const timerConfig = config.generateConfig(langCode, defaultLangCode);
 
     return (
         <div className="container">
             <div className="content-container">
                 <RestTimer
                     config={timerConfig}
-                    presets={state.presets}
-                    selectedPresetIndex={state.selectedPreset} />
+                    presets={presets.collection}
+                    selectedPresetIndex={presets.selectedPresetIndex} />
             </div>
         </div>
     );

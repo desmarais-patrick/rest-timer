@@ -13,7 +13,7 @@
     - TimeDisplay
       - DownIndicator (SVG, styles, animation)
       - Time
-  - Controls
+  - Actions
     - ControlsDisplay
       - Play
       - Pause

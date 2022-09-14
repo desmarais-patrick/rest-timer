@@ -1,23 +1,44 @@
-import React, { useEffect, useState } from 'react';
-import IconDisplay from './IconDisplay';
+import React, { useEffect } from 'react';
+import ControlsDisplay from './ControlsDisplay.jsx';
+import IconDisplay from './IconDisplay.jsx';
+import PresetsDisplay from './PresetsDisplay.jsx';
+import SettingsDisplay from './SettingsDisplay.jsx';
+import TimeDisplay from './TimeDisplay.jsx';
 
 export default function RestTimer(props) {
-    const [presetId, totalMinutes, presetTitle] = props.presets[props.selectedPresetIndex];
-    const [state, setState] = useState({
-        minutesLeft: totalMinutes,
-    });
-
     useEffect(() => {
         document.title = props.config.translations.appTitle;
     });
 
     return (
-        <div>
-            <IconDisplay
-                minified={false}
+        <div className="rest-timer">
+            <div className="main">
+                <IconDisplay
+                    minified={false}
+                    icons={props.config.icons}
+                    translations={props.config.translations}
+                    timeLeftLevel={100}
+                />
+                <TimeDisplay
+                    icons={props.config.icons}
+                    minutesLeft={30}
+                />
+            </div>
+            <div className="actions">
+                <ControlsDisplay
+                    icons={props.config.icons}
+                    translations={props.config.translations}
+                />
+                <PresetsDisplay
+                    icons={props.config.icons}
+                    translations={props.config.translations}
+                    presets={props.presets}
+                />
+            </div>
+            <SettingsDisplay
                 icons={props.config.icons}
                 translations={props.config.translations}
-                timeLeftLevel={100}
+                presets={props.presets}
             />
         </div>
     );

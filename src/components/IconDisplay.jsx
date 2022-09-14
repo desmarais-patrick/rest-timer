@@ -1,8 +1,7 @@
 import React from "react";
 
 export default function IconDisplay(props) {
-    const className = "icon-display" +
-        props.minified ? " icon-display-small" : "";
+    const className = props.minified ? "icon-display icon-display-small" : "icon-display";
 
     let src;
     switch (props.timeLeftLevel) {
@@ -27,10 +26,11 @@ export default function IconDisplay(props) {
     const title = props.translations["appTitle"];
 
     return (
-        <img
-            className={className}
-            src={src}
-            title={title}
-        />
+        <div className={className}>
+            <img
+                src={src}
+                title={title}
+            />
+        </div>
     );
 }
