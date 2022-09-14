@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="54px" height="54px" viewBox="0 0 54 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Play</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-150.000000, -398.000000)" fill="#2A951C" stroke="#046D00" stroke-width="2">
+            <g id="Play" transform="translate(151.000000, 400.000000)">
+                <polygon id="Triangle" transform="translate(25.000000, 25.000000) rotate(90.000000) translate(-25.000000, -25.000000) " points="25 0 50 50 0 50"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

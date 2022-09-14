@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="102px" height="102px" viewBox="0 0 102 102" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>TimerIcon/Empty</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-739.000000, -39.000000)">
+            <g id="TimerIcon/Empty" transform="translate(740.000000, 40.000000)">
+                <path d="M50,0 C77.6142375,0 100,22.3857625 100,50 C100,77.6142375 77.6142375,100 50,100 C22.3857625,100 0,77.6142375 0,50 C0,22.3857625 22.3857625,0 50,0 Z M77,21 L23,21 L46.25,52 L23,83 L77,83 L53.75,52 L77,21 Z" id="Background" stroke="#979797" fill="#046D00"></path>
+                <path d="M77,21 L53.75,52 L77,83 L23,83 L46.25,52 L23,21 L77,21 Z" id="Sablier" stroke="#2A951C" fill="#65EA4D"></path>
+            </g>
+        </g>
+    </g>
+</svg>

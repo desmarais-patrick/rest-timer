@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="54px" height="54px" viewBox="0 0 54 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Cancel</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-331.000000, -404.000000)" fill="#2A951C" stroke="#046D00" stroke-width="2">
+            <g id="Cancel" transform="translate(333.079690, 406.079690)">
+                <path d="M40.3225806,-7.10542736e-15 L50,9.67741935 L34.677,24.999 L50,40.3225806 L40.3225806,50 L24.999,34.677 L9.67741935,50 L1.27897692e-13,40.3225806 L15.322,25 L1.0658141e-14,9.67741935 L9.67741935,1.63424829e-13 L25,15.322 L40.3225806,-7.10542736e-15 Z" id="Combined-Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>
