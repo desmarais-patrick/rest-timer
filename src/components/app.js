@@ -72,6 +72,7 @@ export default function App() {
                     config={timerConfig}
                     presets={presets.collection}
                     selectedPresetIndex={presets.selectedPresetIndex} />
+                <p className="footer">REST TIMER</p>
             </div>
         </div>
     );

@@ -1,9 +1,8 @@
 import React from "react";
 
 export default function TimeDisplay(props) {
-    const downIndicatorClassName = "down-indicator" +
-        props.state === "running" ? "down-indicator-active" : "";
-    const downIndicatorSrc = props.icons["DownIndicator"];
+    const downIndicatorClassName = (props.state === "running" ? "down-indicator down-indicator-active" : "down-indicator");
+    const downIndicatorSrc = (props.state === "running" ? props.icons["DownIndicator"]["Active"] : props.icons["DownIndicator"]["Inactive"]);
 
     const formattedMinutesLeft = props.minutesLeft > 0 ? props.minutesLeft + "m" : "0m";
 

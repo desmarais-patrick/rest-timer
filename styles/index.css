@@ -1,26 +1,147 @@
+* {
+    font-family: Futura, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
 .icon-display {
     text-align: center;
     padding: 2rem 0;
 }
 
 .icon-display img {
-    width: 66%;
+    width: 12rem;
 }
 
 .time-display {
     text-align: right;
+    line-height: 7rem;
 }
 
 .time-display .down-indicator {
-    display: inline-block;
-    width: 20%;
+    display: inline;
+    vertical-align: top;
+    width: 1.5rem;
+    margin-right: 1.5rem;
+    padding-top: 1rem;
 }
 
 .time-display .time-left {
-    display: inline-block;
-    font-size: 9rem;
-    font-family: 'Courier New', Courier, monospace;
+    display: inline;
+    font-family: Futura, Menlo, monospace;
+    font-size: 7rem;
     width: 80%;
+}
+
+.actions {
+    margin-bottom: 2rem;
+}
+
+.controls-display {
+    margin-bottom: 2rem;
+}
+
+.controls-display-control button {
+    position: relative;
+    width: 100%;
+    height: 3rem;
+
+    font-size: 1rem;
+    text-align: center;
+
+    border: 1px solid;
+    border-radius: 2rem;
+}
+
+.controls-display-control button img {
+    display: block;
+    width: 1rem;
+
+    position: absolute;
+    top: 1rem;
+}
+
+.presets-display .presets-display-header {
+    margin-bottom: .5rem;
+}
+
+.presets-display .presets-display-header .presets-title {
+    display: inline-block;
+    width: 50%;
+}
+
+.presets-display .presets-display-header .presets-edit {
+    display: inline-block;
+    width: 50%;
+
+    font-size: 1rem;
+    text-align: right;
+    color: #4DB3EA;
+}
+
+.presets-display .presets-display-header .presets-edit img {
+    display: inline;
+    width: 1rem;
+    margin-left: 0.5rem;
+}
+
+.presets-display-actions {
+    margin-left: -0.25rem;
+    margin-right: -0.25rem;
+}
+
+.presets-action {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 33%;
+    padding: 0 0.25rem;
+}
+
+.presets-action button {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 2rem;
+    border: 1px solid #005B80;
+    color: #005B80;
+    background: #4DB3EA;
+}
+
+.presets-action .presets-action-title {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.settings-header {
+    margin-bottom: .5rem;
+}
+
+.settings-header .settings-title {
+    display: inline-block;
+    width: 50%;
+}
+.settings-header .settings-exit {
+    display: inline-block;
+    width: 50%;
+    text-align: right;
+}
+.settings-header .settings-exit img {
+    height: 1rem;
+}
+
+.settings-presets-item {
+    margin-bottom: .5rem;
+}
+
+.settings-form-action {
+    display: inline-block;
+    width: 50%;
+    padding: .25rem;
+}
+
+.footer {
+    position: static;
+    text-align: center;
+    bottom: 1rem;
 }
 
 @media screen and (min-width: 900px) {
