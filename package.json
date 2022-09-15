@@ -9,7 +9,9 @@
     "debug:server": "babel-node src/server/server.js --ignore dist/ --inspect",
     "dev:bundler": "npm run cleanup && npm run copyStatic && webpack -w --mode=development",
     "cleanup": "rm -rf dist/ && mkdir dist/",
-    "copyStatic": "cp -R images dist/ && cp -R styles dist/"
+    "copyStatic": "npm run copyImages && npm run copyStyles",
+    "copyImages": "cp -R images dist/",
+    "copyStyles": "cp -R styles dist/"
   },
   "author": "",
   "license": "ISC",
