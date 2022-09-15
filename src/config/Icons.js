@@ -9,7 +9,10 @@ export default {
         "Pct90": prefix + "TimerIcon/Pct90.svg",
     },
     "Cancel": prefix + "Cancel.svg",
-    "DownIndicator": prefix + "DownIndicator.svg",
+    "DownIndicator": {
+        "Active": prefix + "DownIndicator/Active.svg",
+        "Inactive": prefix + "DownIndicator/Inactive.svg",
+    },
     "Edit": prefix + "Edit.svg",
     "Pause": prefix + "Pause.svg",
     "Play": prefix + "Play.svg",
