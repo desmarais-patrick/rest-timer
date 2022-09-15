@@ -1,11 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="54px" height="54px" viewBox="0 0 54 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Reset</title>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Artboard" transform="translate(-424.000000, -397.000000)" fill="#2A951C" stroke="#046D00" stroke-width="2">
-            <g id="Reset" transform="translate(426.500000, 399.500000)">
-                <path d="M23,0 L23.0005147,6.72646124 C41.2629076,7.89062395 50.394104,15.1013352 50.394104,28.3585949 C50.394104,42.4374421 35.762736,49.7661425 6.5,50.344696 L6.5,38.8741455 C27.5708618,37.462418 38.1062927,33.9572345 38.1062927,28.3585949 C38.1062927,23.3140966 33.0711761,19.8597691 23.000943,17.9956125 L23,26 L-5.60473984e-14,13 L23,0 Z" id="Combined-Shape"></path>
-            </g>
-        </g>
-    </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54"><path d="M25.5 2.5v6.726c18.263 1.165 27.394 8.375 27.394 21.633 0 14.078-14.631 21.407-43.894 21.986v-11.47c21.07-1.413 31.606-4.918 31.606-10.516 0-5.045-5.035-8.5-15.105-10.363L25.5 28.5l-23-13 23-13Z" fill="rgba(0,0,0,.5)" stroke="rgba(0,0,0,.1)" stroke-width="2" fill-rule="evenodd"/></svg>
