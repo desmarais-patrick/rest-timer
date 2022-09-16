@@ -72,7 +72,7 @@ export default function App() {
                     config={timerConfig}
                     presets={presets.collection}
                     selectedPresetIndex={presets.selectedPresetIndex} />
-                <p className="footer">REST TIMER</p>
+                <p className="footer">{timerConfig.translations["appTitle"].toUpperCase()}</p>
             </div>
         </div>
     );
