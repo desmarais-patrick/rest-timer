@@ -2,7 +2,12 @@
     font-family: Futura, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+/*******************
+ Icon display
+ *******************/
+
 .icon-display {
+    display: block;
     text-align: center;
     padding: 2rem 0;
 }
@@ -10,6 +15,21 @@
 .icon-display img {
     width: 12rem;
 }
+
+@media screen and (min-width: 900px) {
+    .icon-display {
+        display: inline-block;
+        width: 30%;
+    }
+
+    .icon-display img {
+        width: 7rem;
+    }
+}
+
+/*******************
+ Time display
+ *******************/
 
 .time-display {
     text-align: right;
@@ -31,12 +51,41 @@
     width: 80%;
 }
 
+@media screen and (min-width: 900px) {
+    .time-display {
+        display: inline-block;
+        width: 70%;
+    }
+}
+
+/*******************
+ Actions
+ *******************/
+
 .actions {
     margin-bottom: 2rem;
 }
 
+/*******************
+ Controls display
+ *******************/
+
 .controls-display {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
+}
+
+.controls-display-control {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 50%;
+}
+
+.controls-display-control {
+    padding-right: .5rem;
+}
+.controls-display-control + .controls-display-control {
+    padding-right: 0;
+    padding-left: .5rem;
 }
 
 .controls-display-control button {
@@ -59,8 +108,42 @@
     top: 1rem;
 }
 
+.controls-display-control button span {
+    margin-left: .5rem;
+}
+.controls-display-control + .controls-display-control button span {
+    margin-left: 0;
+    margin-right: .5rem;
+}
+
+@media screen and (min-width: 900px) {
+    .controls-display {
+        display: inline-block;
+        width: 30%;
+        box-sizing: border-box;
+        padding-right: 1rem;
+        margin-bottom: 0;
+        vertical-align: top;
+    }
+
+    .controls-display-control {
+        display: block;
+        width: 100%;
+        padding: 0 .5rem;
+        margin: 0 auto 0.5rem;
+    }
+}
+
+/*******************
+ Presets display
+ *******************/
+
+.presets-display {
+    margin-bottom: 3rem;
+}
+
 .presets-display .presets-display-header {
-    margin-bottom: .5rem;
+    margin-bottom: 1rem;
 }
 
 .presets-display .presets-display-header .presets-title {
@@ -111,8 +194,27 @@
     text-overflow: ellipsis;
 }
 
+@media screen and (min-width: 900px) {
+    .presets-display {
+        display: inline-block;
+        width: 70%;
+        box-sizing: border-box;
+        padding-left: 1rem;
+        margin-bottom: 0;
+        vertical-align: top;
+    }
+
+    .presets-display .presets-display-header {
+        margin-bottom: 1.25rem;
+    }
+}
+
+/*******************
+ Settings display
+ *******************/
+
 .settings-header {
-    margin-bottom: .5rem;
+    margin-bottom: 1rem;
 }
 
 .settings-header .settings-title {
@@ -128,6 +230,14 @@
     height: 1rem;
 }
 
+.settings-form {
+    margin-bottom: 2rem;
+}
+
+.settings-presets-list {
+    margin-bottom: 1rem;
+}
+
 .settings-presets-item {
     margin-bottom: .5rem;
 }
@@ -135,16 +245,30 @@
 .settings-form-action {
     display: inline-block;
     width: 50%;
-    padding: .25rem;
+    box-sizing: border-box;
+}
+
+.settings-form-action button {
+    width: 100%;
+    height: 3rem;
+    border-radius: 2rem;
+    border: 1px solid;
+
+    position: relative;
+}
+
+.settings-form-action button img {
+    position: absolute;
+    height: 1rem;
+    top: 1rem;
 }
 
 .footer {
-    position: static;
     text-align: center;
-    bottom: 1rem;
+    padding: 0 2rem;
 }
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 420px) {
     .container {
         display: flex;
         flex-direction: column;
@@ -156,11 +280,18 @@
     .content-container {
         display: flex;
         flex-direction: column;
-        width: 600px;
+        width: 380px;
         margin-top: 50px;
-
         padding: 2rem;
+        box-sizing: border-box;
+
         border: 1px solid darkgrey;
         border-radius: 4px;
+    }
+}
+
+@media screen and (min-width: 900px) {
+    .content-container {
+        width: 750px;
     }
 }
