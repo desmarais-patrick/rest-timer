@@ -27,27 +27,38 @@ const warningSpanStyle = {
 };
 
 export default function ControlsDisplay(props) {
-    const leftButtonTitle = props.translations["controlsPlay"];
-    const leftButtonSrc = props.icons["Play"];
+    let leftButtonAction = "play";
+    let leftButtonTitle = props.translations["controlsPlay"];
+    let leftButtonSrc = props.icons["Play"];
+    if (props.timerState === "paused") {
+        leftButtonAction = "resume";
+        leftButtonTitle = props.translations["controlsResume"];
+        leftButtonSrc = props.icons["Play"];
+    } else if (props.timerState === "running") {
+        leftButtonAction = "pause";
+        leftButtonTitle = props.translations["controlsPause"];
+        leftButtonSrc = props.icons["Pause"];
+    }
     const leftButtonStyle = enabledButtonStyle;
     const leftButtonTextStyle = enabledSpanStyle;
 
+    const rightButtonAction = "cancel";
     const rightButtonTitle = props.translations["controlsCancel"];
     const rightButtonSrc = props.icons["Cancel"];
-    const rightButtonStyle = disabledButtonStyle;
-    const rightButtonTextStyle = disabledSpanStyle;
+    const rightButtonStyle = props.timerState === "ready" ? disabledButtonStyle : warningButtonStyle;
+    const rightButtonTextStyle = props.timerState === "ready" ? disabledSpanStyle : warningSpanStyle;
 
     return (
         <div className="controls-display">
             <div
                 className="controls-display-control">
-                <button style={leftButtonStyle}>
+                <button style={leftButtonStyle} onClick={() => props.onControlAction(leftButtonAction)}>
                     <img src={leftButtonSrc} />
                     <span style={leftButtonTextStyle}>{leftButtonTitle}</span>
                 </button>
             </div>
             <div className="controls-display-control">
-                <button style={rightButtonStyle}>
+                <button style={rightButtonStyle} onClick={() => props.onControlAction(rightButtonAction)}>
                     <img src={rightButtonSrc} />
                     <span style={rightButtonTextStyle}>{rightButtonTitle}</span>
                 </button>
