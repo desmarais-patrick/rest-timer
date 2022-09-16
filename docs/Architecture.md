@@ -178,26 +178,19 @@ onBlur removes spaces and extra zeroes.
 
 ## Programming
 
-1. Code setup: run empty app locally
-1. Skeleton of components (static)
-1. Adapt styles for various resolutions
-1. Specifics:
-   - TimerIcon animation when timer is running
-   - DownIndicator animation when timer is running
-   - CSS classes for transitioning timer states
-   - CSS variables for themes
-   - Language detection
-   - Local storage access and save
-   - Play sound in the browser
-   - Configs, default values and translations
+1. Code setup: run empty app locally ✅
+1. Skeleton of components (static) ✅
+1. Adapt styles for various resolutions ✅
 1. Interactivity:
-   - Player controls
-   - Edit action
-   - Form inputs
-   - Form cancel and save actions
-   - App state affecting components
-1. RefreshTimer algorithm and use cases
-1. Refactoring
+   1. Player control and timer state
+   1. Preset selection and selected preset state
+   1. Time updates and time state
+   1. TimerIcon transitions and time state
+   1. Sound playing and time state
+   1. DownIndicator and timer state
+   1. Edit settings and presets state
+   1. Language detection and loading state
+   1. Local storage, read & save presets and loading state
 1. Testing:
    - Features in Chrome
    - Other browsers on macOS and iOS
