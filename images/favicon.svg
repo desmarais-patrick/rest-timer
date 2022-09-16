@@ -1,13 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Favicon/Small</title>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Artboard" transform="translate(-359.000000, -270.000000)">
-            <g id="Favicon/Small" transform="translate(360.000000, 271.000000)">
-                <path d="M24,0 C37.254834,0 48,10.745166 48,24 C48,37.254834 37.254834,48 24,48 C10.745166,48 0,37.254834 0,24 C0,10.745166 10.745166,0 24,0 Z M36.96,10.08 L11.04,10.08 L22.199,24.96 L11.04,39.84 L36.96,39.84 L25.799,24.96 L36.96,10.08 Z" id="Background" stroke="#979797" fill="#046D00"></path>
-                <path d="M36.96,10.08 L25.799,24.96 L36.96,39.84 L11.04,39.84 L22.199,24.96 L11.04,10.08 L36.96,10.08 Z" id="Sablier" stroke="#2A951C" fill="#48BF34"></path>
-                <path d="M24,0 C37.254834,0 48,10.745166 48,24 C48,37.254834 37.254834,48 24,48 C10.745166,48 0,37.254834 0,24 C0,10.745166 10.745166,0 24,0 Z M36.96,10.08 L11.04,10.08 L22.199,24.96 L11.04,39.84 L36.96,39.84 L25.799,24.96 L36.96,10.08 Z" id="Foreground" stroke="#2A951C" fill="#65EA4D"></path>
-            </g>
-        </g>
-    </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><g fill="none" fill-rule="evenodd"><path d="M25 1c13.255 0 24 10.745 24 24S38.255 49 25 49 1 38.255 1 25 11.745 1 25 1Zm12.96 10.08H12.04l11.159 14.88L12.04 40.84h25.92L26.799 25.96 37.96 11.08Z" stroke="#979797" fill="#046D00"/><path d="M37.96 11.08 26.799 25.96 37.96 40.84H12.04l11.159-14.88L12.04 11.08h25.92Z" stroke="#2A951C" fill="#48BF34"/><path d="M25 1c13.255 0 24 10.745 24 24S38.255 49 25 49 1 38.255 1 25 11.745 1 25 1Zm12.96 10.08H12.04l11.159 14.88L12.04 40.84h25.92L26.799 25.96 37.96 11.08Z" stroke="#2A951C" fill="#65EA4D"/></g></svg>
