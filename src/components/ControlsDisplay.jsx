@@ -14,14 +14,6 @@ const warningButtonStyle = {
     borderColor: "#005B80",
 };
 
-const leftImgStyle = {
-    left: "1rem",
-};
-
-const rightImgStyle = {
-    right: "1rem",
-};
-
 const enabledSpanStyle = {
     color: "#046D00",
 };
@@ -50,13 +42,13 @@ export default function ControlsDisplay(props) {
             <div
                 className="controls-display-control">
                 <button style={leftButtonStyle}>
-                    <img src={leftButtonSrc} style={leftImgStyle} />
+                    <img src={leftButtonSrc} />
                     <span style={leftButtonTextStyle}>{leftButtonTitle}</span>
                 </button>
             </div>
             <div className="controls-display-control">
                 <button style={rightButtonStyle}>
-                    <img src={rightButtonSrc} style={rightImgStyle} />
+                    <img src={rightButtonSrc} />
                     <span style={rightButtonTextStyle}>{rightButtonTitle}</span>
                 </button>
             </div>

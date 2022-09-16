@@ -50,16 +50,16 @@ export default function SettingsDisplay(props) {
                     })}
                 </div>
                 <div className="settings-form-footer">
-                    <div className="settings-form-action" style={{ paddingRight: ".5rem" }}>
+                    <div className="settings-form-action">
                         <button className="cancel-action" type="button">
-                            <img src={props.icons["Cancel"]} style={{ left: "1rem" }} />
-                            <span style={{ marginLeft: "1rem", fontSize: "1rem" }}>{props.translations["cancelAction"]}</span>
+                            <img src={props.icons["Cancel"]} />
+                            <span>{props.translations["cancelAction"]}</span>
                         </button>
                     </div>
-                    <div className="settings-form-action" style={{ paddingLeft: ".5rem" }}>
+                    <div className="settings-form-action">
                         <button className="save-action" type="submit">
-                            <img src={props.icons["Save"]} style={{ right: "1rem" }} />
-                            <span style={{ marginRight: "1rem", fontSize: "1rem" }}>{props.translations["saveAction"]}</span>
+                            <img src={props.icons["Save"]} />
+                            <span>{props.translations["saveAction"]}</span>
                         </button>
                     </div>
                 </div>
