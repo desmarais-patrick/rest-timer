@@ -18,11 +18,14 @@ export default function PresetsDisplay(props) {
             </div>
             <div className="presets-display-actions">
                 {props.presets.map(
-                    ([id, totalMinutes, title]) => (
+                    ([id, totalMinutes, title], index) => (
                         <PresetAction
                             key={id}
+                            id={id}
                             totalMinutes={totalMinutes}
                             title={title}
+                            isSelected={props.selectedPresetIndex === index}
+                            onSelect={props.onSelectPreset}
                         />)
                 )}
             </div>

@@ -243,6 +243,14 @@ button span {
     color: #005B80;
     background: #4DB3EA;
 }
+.presets-action.selected button {
+    border-width: 3px;
+    font-weight: bold;
+}
+
+.presets-action.selected button div {
+    margin-top: -.1rem;
+}
 
 .presets-action .presets-action-title {
     width: 100%;

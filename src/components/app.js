@@ -53,17 +53,30 @@ function useAppState(defaultLangCode, defaultPresets, defaultPresetIndex) {
         }));
     }, [presets]);
 
-    return { langCode, presets };
+    return { langCode, presets, setPresets };
 }
 
 export default function App() {
     const defaultLangCode = "en";
     const defaultPresets = TimerPresets.generateDefaultPresets(allTranslations[defaultLangCode]);
     const defaultPresetIndex = 0;
-    const { langCode, presets } = useAppState(defaultLangCode, defaultPresets, defaultPresetIndex);
+    const { langCode, presets, setPresets } = useAppState(defaultLangCode, defaultPresets, defaultPresetIndex);
 
     const config = new Config(allTranslations, defaultPresets, icons);
     const timerConfig = config.generateConfig(langCode, defaultLangCode);
+
+    const onSelectPreset = (newSelectedPresetId) => {
+        let newSelectedPresetIndex = 0;
+        presets.collection.forEach(([id], index) => {
+            if (newSelectedPresetId === id) {
+                newSelectedPresetIndex = index;
+            }
+        });
+        setPresets({
+            ...presets,
+            selectedPresetIndex: newSelectedPresetIndex,
+        });
+    };
 
     return (
         <div className="container">
@@ -71,7 +84,8 @@ export default function App() {
                 <RestTimer
                     config={timerConfig}
                     presets={presets.collection}
-                    selectedPresetIndex={presets.selectedPresetIndex} />
+                    selectedPresetIndex={presets.selectedPresetIndex}
+                    onSelectPreset={onSelectPreset} />
                 <p className="footer">{timerConfig.translations["appTitle"].toUpperCase()}</p>
             </div>
         </div>

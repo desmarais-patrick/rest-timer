@@ -56,6 +56,8 @@ export default function RestTimer(props) {
                     icons={props.config.icons}
                     translations={props.config.translations}
                     presets={props.presets}
+                    selectedPresetIndex={props.selectedPresetIndex}
+                    onSelectPreset={props.onSelectPreset}
                 />
             </div>
             <SettingsDisplay

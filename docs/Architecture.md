@@ -182,8 +182,8 @@ onBlur removes spaces and extra zeroes.
 1. Skeleton of components (static) ✅
 1. Adapt styles for various resolutions ✅
 1. Interactivity:
-   1. Player control and timer state
-   1. Preset selection and selected preset state
+   1. Player control and timer state ✅
+   1. Preset selection and selected preset state ✅
    1. Time updates and time state
    1. TimerIcon transitions and time state
    1. Sound playing and time state
