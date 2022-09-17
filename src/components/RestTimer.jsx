@@ -6,10 +6,26 @@ import SettingsDisplay from './SettingsDisplay.jsx';
 import TimeDisplay from './TimeDisplay.jsx';
 
 export default function RestTimer(props) {
+    const defaultMinutesLeft = props.presets[props.selectedPresetIndex][1];
+
     const [timerState, setTimerState] = useState("ready");
+    const [minutesLeft, setMinutesLeft] = useState(defaultMinutesLeft);
 
     useEffect(() => {
         document.title = props.config.translations.appTitle;
+
+        const timeoutId = setTimeout(() => {
+            if (minutesLeft === 0 || timerState !== "running") {
+                return;
+            }
+
+            const newMinutesLeft = (minutesLeft > 0) ? minutesLeft - 1 : 0;
+            setMinutesLeft(newMinutesLeft);
+        }, 60000);
+
+        return () => {
+            clearTimeout(timeoutId);
+        };
     });
 
     const onControlAction = (action) => {
@@ -22,6 +38,7 @@ export default function RestTimer(props) {
                 break;
             case "cancel":
                 setTimerState("ready");
+                setMinutesLeft(props.presets[props.selectedPresetIndex][1]);
                 break;
             case "resume":
                 setTimerState("running");
@@ -42,7 +59,7 @@ export default function RestTimer(props) {
                 />
                 <TimeDisplay
                     icons={props.config.icons}
-                    minutesLeft={30}
+                    minutesLeft={minutesLeft}
                 />
             </div>
             <div className="actions">
