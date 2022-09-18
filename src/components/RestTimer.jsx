@@ -5,48 +5,127 @@ import PresetsDisplay from './PresetsDisplay.jsx';
 import SettingsDisplay from './SettingsDisplay.jsx';
 import TimeDisplay from './TimeDisplay.jsx';
 
+function computeTimeLeft(startTimeDate, timerDurationInMillis) {
+    const startTime = startTimeDate.getTime();
+    const endTime = startTime + timerDurationInMillis;
+    if (endTime <= 0) {
+        return -1;
+    }
+
+    const currentTimeDate = new Date();
+    const currentTime = currentTimeDate.getTime();
+
+    const timeLeftInMillis = endTime - currentTime;
+    return timeLeftInMillis;
+}
+
 export default function RestTimer(props) {
     const defaultMinutesLeft = props.presets[props.selectedPresetIndex][1];
-
-    const [timerState, setTimerState] = useState("ready");
-    const [minutesLeft, setMinutesLeft] = useState(defaultMinutesLeft);
+    const defaultTimerDurationInMillis = defaultMinutesLeft * 60 * 1000;
+    const [timerState, setTimerState] = useState({
+        state: "ready",
+        startTimeDate: null,
+        startTimerDurationInMillis: defaultTimerDurationInMillis,
+        millisLeft: defaultTimerDurationInMillis,
+    });
 
     useEffect(() => {
         document.title = props.config.translations.appTitle;
 
-        const timeoutId = setTimeout(() => {
-            if (minutesLeft === 0 || timerState !== "running") {
-                return;
-            }
+        let timeoutId = null;
+        if (timerState.state === "running") {
+            const millisLeft = computeTimeLeft(timerState.startTimeDate, timerState.startTimerDurationInMillis);
+            if (millisLeft > 0) {
+                const oneMinuteInMillis = 60 * 1000;
+                const millisLeftUntilNextMin = millisLeft % oneMinuteInMillis;
 
-            const newMinutesLeft = (minutesLeft > 0) ? minutesLeft - 1 : 0;
-            setMinutesLeft(newMinutesLeft);
-        }, 60000);
+                const timeoutDelay = millisLeftUntilNextMin + 1;
+                timeoutId = setTimeout(() => {
+                    if (timerState.millisLeft <= 0 || timerState.state !== "running") {
+                        return;
+                    }
+
+                    const newMillisLeft = computeTimeLeft(timerState.startTimeDate, timerState.startTimerDurationInMillis);
+                    const newState = newMillisLeft > 0 ? "running" : "end";
+                    setTimerState(timerState => ({
+                        ...timerState,
+                        state: newState,
+                        millisLeft: newMillisLeft,
+                    }));
+                }, timeoutDelay);
+            } else {
+                setTimerState(timerState => ({
+                    ...timerState,
+                    state: "end",
+                    minutesLeft: 0,
+                    millisLeft: 0,
+                    startTimeDate: null,
+                }));
+            }
+        }
 
         return () => {
-            clearTimeout(timeoutId);
+            if (timeoutId !== null) {
+                clearTimeout(timeoutId);
+            }
         };
-    });
+    }, [
+        timerState.state,
+        timerState.startTimeDate,
+        timerState.startTimerDurationInMillis,
+        timerState.millisLeft,
+        props.config.translations.appTitle
+    ]);
 
     const onControlAction = (action) => {
+        let millisLeft, resumeStartTime;
         switch (action) {
             case "play":
-                setTimerState("running");
+                millisLeft = props.presets[props.selectedPresetIndex][1] * 60 * 1000;
+                setTimerState({
+                    state: "running",
+                    startTimeDate: new Date(),
+                    startTimerDurationInMillis: millisLeft,
+                    millisLeft,
+                });
                 break;
             case "pause":
-                setTimerState("paused");
+                setTimerState(timerState => {
+                    const pausedMillisLeft = computeTimeLeft(timerState.startTimeDate, timerState.startTimerDurationInMillis);
+                    return {
+                        state: "paused",
+                        millisLeft: pausedMillisLeft,
+                    };
+                });
                 break;
             case "cancel":
-                setTimerState("ready");
-                setMinutesLeft(props.presets[props.selectedPresetIndex][1]);
+                millisLeft = props.presets[props.selectedPresetIndex][1] * 60 * 1000;
+                setTimerState({
+                    state: "ready",
+                    startTimeDate: null,
+                    startTimerDurationInMillis: millisLeft,
+                    millisLeft,
+                });
                 break;
             case "resume":
-                setTimerState("running");
+                setTimerState(timerState => {
+                    resumeStartTime = new Date();
+                    millisLeft = computeTimeLeft(resumeStartTime, timerState.millisLeft);
+                    return {
+                        ...timerState,
+                        state: "running",
+                        startTimeDate: resumeStartTime,
+                        startTimerDurationInMillis: timerState.millisLeft,
+                        millisLeft,
+                    };
+                });
                 break;
             default:
                 throw new Error(`Control action not supported ${action}`);
         }
     };
+
+    const minutesLeft = Math.ceil(timerState.millisLeft / (60 * 1000));
 
     return (
         <div className="rest-timer">
@@ -66,7 +145,7 @@ export default function RestTimer(props) {
                 <ControlsDisplay
                     icons={props.config.icons}
                     translations={props.config.translations}
-                    timerState={timerState}
+                    timerState={timerState.state}
                     onControlAction={onControlAction}
                 />
                 <PresetsDisplay

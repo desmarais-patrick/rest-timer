@@ -14,6 +14,7 @@ function useAppState(defaultLangCode, defaultPresets, defaultPresetIndex) {
         collection: defaultPresets,
         defaultPresetsOn: true,
         selectedPresetIndex: defaultPresetIndex,
+        variationCount: 0,
     });
 
     useEffect(() => {
@@ -28,6 +29,7 @@ function useAppState(defaultLangCode, defaultPresets, defaultPresetIndex) {
                 setPresets(presets => ({
                     ...presets,
                     collection: newPresets,
+                    variationCount: presets.variationCount + 1,
                 }));
             }
         }
@@ -50,6 +52,7 @@ function useAppState(defaultLangCode, defaultPresets, defaultPresetIndex) {
             ...presets,
             collection: savedPresets,
             defaultPresetsOn: false,
+            variationCount: presets.variationCount + 1,
         }));
     }, [presets]);
 
@@ -75,13 +78,14 @@ export default function App() {
         setPresets({
             ...presets,
             selectedPresetIndex: newSelectedPresetIndex,
+            variationCount: presets.variationCount + 1,
         });
     };
 
     return (
         <div className="container">
             <div className="content-container">
-                <RestTimer
+                <RestTimer key={presets.variationCount}
                     config={timerConfig}
                     presets={presets.collection}
                     selectedPresetIndex={presets.selectedPresetIndex}
