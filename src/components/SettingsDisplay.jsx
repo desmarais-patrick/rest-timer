@@ -1,7 +1,7 @@
 import React from "react";
 
 const totalMinutesInputStyle = {
-    width: "3rem",
+    width: "4rem",
     marginRight: ".5rem",
 };
 
