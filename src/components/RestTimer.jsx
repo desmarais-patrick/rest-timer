@@ -30,13 +30,13 @@ export default function RestTimer(props) {
     });
 
     useEffect(() => {
-        document.title = props.config.translations.appTitle;
-
+        let minutesLeft = null;
         let timeoutId = null;
         if (timerState.state === "running") {
             const millisLeft = computeTimeLeft(timerState.startTimeDate, timerState.startTimerDurationInMillis);
             if (millisLeft > 0) {
                 const oneMinuteInMillis = 60 * 1000;
+                minutesLeft = "↓" + Math.ceil(millisLeft / oneMinuteInMillis) + "m";
                 const millisLeftUntilNextMin = millisLeft % oneMinuteInMillis;
 
                 const timeoutDelay = millisLeftUntilNextMin + 1;
@@ -54,14 +54,20 @@ export default function RestTimer(props) {
                     }));
                 }, timeoutDelay);
             } else {
-                setTimerState(timerState => ({
-                    ...timerState,
+                minutesLeft = "0m";
+                setTimerState({
                     state: "end",
-                    minutesLeft: 0,
-                    millisLeft: 0,
                     startTimeDate: null,
-                }));
+                    startTimerDurationInMillis: 0,
+                    millisLeft: 0,
+                });
             }
+        }
+
+        if (!minutesLeft) {
+            document.title = props.config.translations.appTitle;
+        } else {
+            document.title = `${minutesLeft} | ${props.config.translations.appTitle}`;
         }
 
         return () => {
@@ -89,15 +95,6 @@ export default function RestTimer(props) {
                     millisLeft,
                 });
                 break;
-            case "pause":
-                setTimerState(timerState => {
-                    const pausedMillisLeft = computeTimeLeft(timerState.startTimeDate, timerState.startTimerDurationInMillis);
-                    return {
-                        state: "paused",
-                        millisLeft: pausedMillisLeft,
-                    };
-                });
-                break;
             case "cancel":
                 millisLeft = props.presets[props.selectedPresetIndex][1] * 60 * 1000;
                 setTimerState({
@@ -107,12 +104,20 @@ export default function RestTimer(props) {
                     millisLeft,
                 });
                 break;
+            case "pause":
+                setTimerState(timerState => {
+                    const pausedMillisLeft = computeTimeLeft(timerState.startTimeDate, timerState.startTimerDurationInMillis);
+                    return {
+                        state: "paused",
+                        millisLeft: pausedMillisLeft,
+                    };
+                });
+                break;
             case "resume":
                 setTimerState(timerState => {
                     resumeStartTime = new Date();
                     millisLeft = computeTimeLeft(resumeStartTime, timerState.millisLeft);
                     return {
-                        ...timerState,
                         state: "running",
                         startTimeDate: resumeStartTime,
                         startTimerDurationInMillis: timerState.millisLeft,

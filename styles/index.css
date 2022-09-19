@@ -16,10 +16,8 @@ button span {
     }
 
     .content-container {
-        display: flex;
-        flex-direction: column;
         width: 380px;
-        margin-top: 50px;
+        margin: 2rem 0;
         padding: 2rem;
         box-sizing: border-box;
 
