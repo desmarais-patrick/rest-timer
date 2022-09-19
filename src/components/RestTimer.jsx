@@ -161,6 +161,7 @@ export default function RestTimer(props) {
                 />
                 <TimeDisplay
                     icons={props.config.icons}
+                    timerState={timerState.state}
                     minutesLeft={minutesLeft}
                 />
             </div>
