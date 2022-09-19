@@ -22,6 +22,34 @@ function getDetectedLangCode(supportedLangCodes, defaultLangCode) {
     return defaultLangCode;
 }
 
+function readLocalStoragePresets() {
+    if (typeof window.localStorage === "undefined") {
+        return null;
+    }
+    const jsonStr = window.localStorage.getItem("presets");
+    if (!jsonStr) {
+        return null;
+    }
+    try {
+        return JSON.parse(jsonStr);
+    } catch (e) {
+        return null;
+    }
+}
+
+function saveLocalStoragePresets(presets) {
+    if (typeof window.localStorage === "undefined") {
+        return;
+    }
+    const jsonStr = JSON.stringify(presets);
+    try {
+        window.localStorage.setItem("presets", jsonStr);
+    } catch (e) {
+        console.error("Saving presets failed", e);
+        return;
+    }
+}
+
 function useAppState(supportedLangCodes, defaultLangCode, defaultPresets, defaultPresetIndex) {
     const [loading, setLoading] = useState({
         languageDetected: false,
@@ -59,14 +87,7 @@ function useAppState(supportedLangCodes, defaultLangCode, defaultPresets, defaul
             return;
         }
 
-        // Read saved presets.
-        const rand = Math.random() * 10;
-        const savedPresets = (rand < 5) ? null : [
-            ["A", 25, "Pomodoro"],
-            ["B", 5, "🏃🏻‍♂️💨"],
-            ["C", 15, "⌛️"]
-        ];
-
+        const savedPresets = readLocalStoragePresets();
         setLoading(loading => ({
             ...loading,
             localStorageRead: true,
@@ -111,6 +132,7 @@ export default function App() {
     };
 
     const onPresetCollectionChange = (newPresets) => {
+        saveLocalStoragePresets(newPresets);
         setPresets({
             ...presets,
             collection: newPresets,

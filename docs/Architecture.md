@@ -190,7 +190,7 @@ onBlur removes spaces and extra zeroes.
    1. DownIndicator and timer state ✅
    1. Edit settings and presets state ✅
    1. Language detection and loading state ✅
-   1. Local storage, read & save presets and loading state
+   1. Local storage, read & save presets and loading state ✅
 1. Testing:
    - Features in Chrome
    - Other browsers on macOS and iOS
