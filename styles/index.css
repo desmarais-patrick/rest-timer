@@ -6,6 +6,34 @@ button span {
     font-size: 1rem;
 }
 
+.container {
+    position: relative;
+}
+
+.content-container {
+    opacity: 0;
+}
+.content-container.loaded {
+    animation-name: fadeIn;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+
+    opacity: 1;
+}
+
+@keyframes fadeIn {
+  from {
+    transform: translateY(.5rem);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
 @media screen and (min-width: 420px) {
     .container {
         display: flex;

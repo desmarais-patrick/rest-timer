@@ -9,9 +9,25 @@ import Config from "../models/Config.js";
 
 import RestTimer from "../components/RestTimer.jsx";
 
-function useAppState(defaultLangCode, defaultPresets, defaultPresetIndex) {
+function getDetectedLangCode(supportedLangCodes, defaultLangCode) {
+    const navigatorLanguage = window.navigator.language;
+    let langRegExp;
+    let i = 0;
+    for (; i < supportedLangCodes.length; i++) {
+        langRegExp = new RegExp(`^${supportedLangCodes[i]}\\b`, "i");
+        if (langRegExp.test(navigatorLanguage)) {
+            return supportedLangCodes[i];
+        }
+    }
+    return defaultLangCode;
+}
+
+function useAppState(supportedLangCodes, defaultLangCode, defaultPresets, defaultPresetIndex) {
+    const [loading, setLoading] = useState({
+        languageDetected: false,
+        localStorageRead: false,
+    });
     const [langCode, setLangCode] = useState(defaultLangCode);
-    const [savedPresetsRetrieved, setSavedPresetsRetrieved] = useState(false);
     const [presets, setPresets] = useState({
         collection: defaultPresets,
         defaultPresetsOn: true,
@@ -20,10 +36,7 @@ function useAppState(defaultLangCode, defaultPresets, defaultPresetIndex) {
     });
 
     useEffect(() => {
-        // Detect browser language.
-        const rand = Math.random() * 10;
-        const detectedLangCode = (rand < 5) ? "en" : "fr";
-
+        const detectedLangCode = getDetectedLangCode(supportedLangCodes, defaultLangCode);
         if (langCode !== detectedLangCode) {
             setLangCode(detectedLangCode);
             if (presets.defaultPresetsOn) {
@@ -35,10 +48,14 @@ function useAppState(defaultLangCode, defaultPresets, defaultPresetIndex) {
                 }));
             }
         }
-    }, [langCode]); // presets is not dependency once user edits it.
+        setLoading(loading => ({
+            ...loading,
+            languageDetected: true,
+        }));
+    }, [loading.languageDetected, langCode]); // presets is not dependency once user edits it.
 
     useEffect(() => {
-        if (savedPresetsRetrieved) {
+        if (loading.localStorageRead) {
             return;
         }
 
@@ -50,7 +67,10 @@ function useAppState(defaultLangCode, defaultPresets, defaultPresetIndex) {
             ["C", 15, "⌛️"]
         ];
 
-        setSavedPresetsRetrieved(true);
+        setLoading(loading => ({
+            ...loading,
+            localStorageRead: true,
+        }));
         if (savedPresets === null) {
             return;
         }
@@ -61,16 +81,17 @@ function useAppState(defaultLangCode, defaultPresets, defaultPresetIndex) {
             defaultPresetsOn: false,
             variationCount: presets.variationCount + 1,
         }));
-    }, [savedPresetsRetrieved, presets]);
+    }, [loading.localStorageRead, presets]);
 
-    return { langCode, presets, setPresets };
+    return { loading, langCode, presets, setPresets };
 }
 
 export default function App() {
     const defaultLangCode = "en";
     const defaultPresets = TimerPresets.generateDefaultPresets(allTranslations[defaultLangCode]);
     const defaultPresetIndex = 0;
-    const { langCode, presets, setPresets } = useAppState(defaultLangCode, defaultPresets, defaultPresetIndex);
+    const supportedLangCodes = Object.keys(allTranslations);
+    const { loading, langCode, presets, setPresets } = useAppState(supportedLangCodes, defaultLangCode, defaultPresets, defaultPresetIndex);
 
     const config = new Config(allTranslations, defaultPresets, icons, audio);
     const timerConfig = config.generateConfig(langCode, defaultLangCode);
@@ -98,9 +119,11 @@ export default function App() {
         });
     };
 
+    const isLoaded = loading.languageDetected && loading.localStorageRead;
+    const containerClassName = isLoaded ? "content-container loaded" : "content-container";
     return (
         <div className="container">
-            <div className="content-container">
+            <div className={containerClassName}>
                 <RestTimer key={presets.variationCount}
                     config={timerConfig}
                     presets={presets.collection}
@@ -109,6 +132,6 @@ export default function App() {
                     onPresetChange={onPresetCollectionChange} />
                 <p className="footer">{timerConfig.translations["appTitle"].toUpperCase()}</p>
             </div>
-        </div>
+        </div >
     );
 }
