@@ -37,6 +37,11 @@ function computeTimeLeftLevel(minutesLeft, totalTimerMinutes) {
     }
 }
 
+function playAudio(audioPath) {
+    const audio = new Audio(audioPath);
+    audio.play();
+}
+
 export default function RestTimer(props) {
     const defaultMinutesLeft = props.presets[props.selectedPresetIndex][1];
     const defaultTimerDurationInMillis = defaultMinutesLeft * ONE_MIN_IN_MILLIS;
@@ -45,6 +50,7 @@ export default function RestTimer(props) {
         startTimeDate: null,
         startTimerDurationInMillis: defaultTimerDurationInMillis,
         millisLeft: defaultTimerDurationInMillis,
+        audioPlayed: false,
     });
 
     useEffect(() => {
@@ -64,19 +70,29 @@ export default function RestTimer(props) {
 
                     const newMillisLeft = computeTimeLeft(timerState.startTimeDate, timerState.startTimerDurationInMillis);
                     const newState = newMillisLeft > 0 ? "running" : "end";
+                    let audioPlayed = false;
+                    if (newMillisLeft <= 0 && timerState.audioPlayed === false) {
+                        playAudio(props.config.audio["Tabla"]);
+                        audioPlayed = true;
+                    }
                     setTimerState(timerState => ({
                         ...timerState,
                         state: newState,
                         millisLeft: newMillisLeft,
+                        audioPlayed,
                     }));
                 }, timeoutDelay);
             } else {
                 minutesLeft = "0m";
+                if (timerState.audioPlayed === false) {
+                    playAudio(props.config.audio["Tabla"]);
+                }
                 setTimerState({
                     state: "end",
                     startTimeDate: null,
                     startTimerDurationInMillis: 0,
                     millisLeft: 0,
+                    audioPlayed: true,
                 });
             }
         }
@@ -97,7 +113,9 @@ export default function RestTimer(props) {
         timerState.startTimeDate,
         timerState.startTimerDurationInMillis,
         timerState.millisLeft,
-        props.config.translations.appTitle
+        timerState.audioPlayed,
+        props.config.translations.appTitle,
+        props.config.audio,
     ]);
 
     const onControlAction = (action) => {
@@ -110,6 +128,7 @@ export default function RestTimer(props) {
                     startTimeDate: new Date(),
                     startTimerDurationInMillis: millisLeft,
                     millisLeft,
+                    audioPlayed: false,
                 });
                 break;
             case "cancel":
@@ -119,12 +138,14 @@ export default function RestTimer(props) {
                     startTimeDate: null,
                     startTimerDurationInMillis: millisLeft,
                     millisLeft,
+                    audioPlayed: false,
                 });
                 break;
             case "pause":
                 setTimerState(timerState => {
                     const pausedMillisLeft = computeTimeLeft(timerState.startTimeDate, timerState.startTimerDurationInMillis);
                     return {
+                        ...timerState,
                         state: "paused",
                         millisLeft: pausedMillisLeft,
                     };
@@ -135,6 +156,7 @@ export default function RestTimer(props) {
                     resumeStartTime = new Date();
                     millisLeft = computeTimeLeft(resumeStartTime, timerState.millisLeft);
                     return {
+                        ...timerState,
                         state: "running",
                         startTimeDate: resumeStartTime,
                         startTimerDurationInMillis: timerState.millisLeft,

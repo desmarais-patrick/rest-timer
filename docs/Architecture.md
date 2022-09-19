@@ -186,8 +186,8 @@ onBlur removes spaces and extra zeroes.
    1. Preset selection and selected preset state ✅
    1. Time updates and time state ✅
    1. TimerIcon transitions and time state ✅
-   1. Sound playing and time state
-   1. DownIndicator and timer state
+   1. Sound playing and time state ✅
+   1. DownIndicator and timer state ✅
    1. Edit settings and presets state
    1. Language detection and loading state
    1. Local storage, read & save presets and loading state

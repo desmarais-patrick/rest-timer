@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import allTranslations from "../config/Translations.js";
 import TimerPresets from "../config/TimerPresets.js";
 import icons from "../config/Icons.js";
+import audio from "../config/Audio.js";
 
 import Config from "../models/Config.js";
 
@@ -65,7 +66,7 @@ export default function App() {
     const defaultPresetIndex = 0;
     const { langCode, presets, setPresets } = useAppState(defaultLangCode, defaultPresets, defaultPresetIndex);
 
-    const config = new Config(allTranslations, defaultPresets, icons);
+    const config = new Config(allTranslations, defaultPresets, icons, audio);
     const timerConfig = config.generateConfig(langCode, defaultLangCode);
 
     const onSelectPreset = (newSelectedPresetId) => {
