@@ -52,6 +52,7 @@ export default function RestTimer(props) {
         millisLeft: defaultTimerDurationInMillis,
         audioPlayed: false,
     });
+    const [displayMode, setDisplayMode] = useState("presets");
 
     useEffect(() => {
         let minutesLeft = null;
@@ -169,6 +170,16 @@ export default function RestTimer(props) {
         }
     };
 
+    const showSettings = () => {
+        setDisplayMode("settings");
+    };
+    const onSettingsCancel = () => {
+        setDisplayMode("presets");
+    };
+    const onSettingsSave = (newPresets) => {
+        props.onPresetChange(newPresets);
+    };
+
     const minutesLeft = Math.ceil(timerState.millisLeft / ONE_MIN_IN_MILLIS);
     let timeLeftLevel = computeTimeLeftLevel(minutesLeft, props.presets[props.selectedPresetIndex][1]);
 
@@ -176,7 +187,7 @@ export default function RestTimer(props) {
         <div className="rest-timer">
             <div className="main">
                 <IconDisplay
-                    minified={false}
+                    minified={displayMode === "settings"}
                     icons={props.config.icons}
                     translations={props.config.translations}
                     timeLeftLevel={timeLeftLevel}
@@ -187,26 +198,33 @@ export default function RestTimer(props) {
                     minutesLeft={minutesLeft}
                 />
             </div>
-            <div className="actions">
-                <ControlsDisplay
-                    icons={props.config.icons}
+            {displayMode === "presets" &&
+                <div className="actions">
+                    <ControlsDisplay
+                        icons={props.config.icons}
+                        translations={props.config.translations}
+                        timerState={timerState.state}
+                        onControlAction={onControlAction}
+                    />
+                    <PresetsDisplay
+                        icons={props.config.icons}
+                        translations={props.config.translations}
+                        presets={props.presets}
+                        selectedPresetIndex={props.selectedPresetIndex}
+                        onSelectPreset={props.onSelectPreset}
+                        showSettings={showSettings}
+                    />
+                </div>
+            }
+            {displayMode === "settings" &&
+                <SettingsDisplay
                     translations={props.config.translations}
-                    timerState={timerState.state}
-                    onControlAction={onControlAction}
-                />
-                <PresetsDisplay
                     icons={props.config.icons}
-                    translations={props.config.translations}
                     presets={props.presets}
-                    selectedPresetIndex={props.selectedPresetIndex}
-                    onSelectPreset={props.onSelectPreset}
+                    onCancel={onSettingsCancel}
+                    onSave={onSettingsSave}
                 />
-            </div>
-            <SettingsDisplay
-                icons={props.config.icons}
-                translations={props.config.translations}
-                presets={props.presets}
-            />
+            }
         </div>
     );
 }

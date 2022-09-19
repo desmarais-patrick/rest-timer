@@ -11,6 +11,7 @@ import RestTimer from "../components/RestTimer.jsx";
 
 function useAppState(defaultLangCode, defaultPresets, defaultPresetIndex) {
     const [langCode, setLangCode] = useState(defaultLangCode);
+    const [savedPresetsRetrieved, setSavedPresetsRetrieved] = useState(false);
     const [presets, setPresets] = useState({
         collection: defaultPresets,
         defaultPresetsOn: true,
@@ -37,6 +38,10 @@ function useAppState(defaultLangCode, defaultPresets, defaultPresetIndex) {
     }, [langCode]); // presets is not dependency once user edits it.
 
     useEffect(() => {
+        if (savedPresetsRetrieved) {
+            return;
+        }
+
         // Read saved presets.
         const rand = Math.random() * 10;
         const savedPresets = (rand < 5) ? null : [
@@ -45,6 +50,7 @@ function useAppState(defaultLangCode, defaultPresets, defaultPresetIndex) {
             ["C", 15, "⌛️"]
         ];
 
+        setSavedPresetsRetrieved(true);
         if (savedPresets === null) {
             return;
         }
@@ -55,7 +61,7 @@ function useAppState(defaultLangCode, defaultPresets, defaultPresetIndex) {
             defaultPresetsOn: false,
             variationCount: presets.variationCount + 1,
         }));
-    }, [presets]);
+    }, [savedPresetsRetrieved, presets]);
 
     return { langCode, presets, setPresets };
 }
@@ -83,6 +89,15 @@ export default function App() {
         });
     };
 
+    const onPresetCollectionChange = (newPresets) => {
+        setPresets({
+            ...presets,
+            collection: newPresets,
+            defaultPresetsOn: false,
+            variationCount: presets.variationCount + 1,
+        });
+    };
+
     return (
         <div className="container">
             <div className="content-container">
@@ -90,7 +105,8 @@ export default function App() {
                     config={timerConfig}
                     presets={presets.collection}
                     selectedPresetIndex={presets.selectedPresetIndex}
-                    onSelectPreset={onSelectPreset} />
+                    onSelectPreset={onSelectPreset}
+                    onPresetChange={onPresetCollectionChange} />
                 <p className="footer">{timerConfig.translations["appTitle"].toUpperCase()}</p>
             </div>
         </div>
