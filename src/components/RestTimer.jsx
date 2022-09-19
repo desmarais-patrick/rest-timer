@@ -5,6 +5,9 @@ import PresetsDisplay from './PresetsDisplay.jsx';
 import SettingsDisplay from './SettingsDisplay.jsx';
 import TimeDisplay from './TimeDisplay.jsx';
 
+const ONE_MIN_IN_MILLIS = 60 * 1000;
+const EXTRA_TIMEOUT_DELAY_IN_MS = 10;
+
 function computeTimeLeft(startTimeDate, timerDurationInMillis) {
     const startTime = startTimeDate.getTime();
     const endTime = startTime + timerDurationInMillis;
@@ -19,9 +22,24 @@ function computeTimeLeft(startTimeDate, timerDurationInMillis) {
     return timeLeftInMillis;
 }
 
+function computeTimeLeftLevel(minutesLeft, totalTimerMinutes) {
+    const percentage = Math.ceil(100 * minutesLeft / totalTimerMinutes);
+    if (percentage >= 100) {
+        return 100;
+    } else if (percentage >= 90) {
+        return 90;
+    } else if (percentage >= 50) {
+        return 50;
+    } else if (percentage >= 10) {
+        return 10;
+    } else {
+        return 0;
+    }
+}
+
 export default function RestTimer(props) {
     const defaultMinutesLeft = props.presets[props.selectedPresetIndex][1];
-    const defaultTimerDurationInMillis = defaultMinutesLeft * 60 * 1000;
+    const defaultTimerDurationInMillis = defaultMinutesLeft * ONE_MIN_IN_MILLIS;
     const [timerState, setTimerState] = useState({
         state: "ready",
         startTimeDate: null,
@@ -35,11 +53,10 @@ export default function RestTimer(props) {
         if (timerState.state === "running") {
             const millisLeft = computeTimeLeft(timerState.startTimeDate, timerState.startTimerDurationInMillis);
             if (millisLeft > 0) {
-                const oneMinuteInMillis = 60 * 1000;
-                minutesLeft = "↓" + Math.ceil(millisLeft / oneMinuteInMillis) + "m";
-                const millisLeftUntilNextMin = millisLeft % oneMinuteInMillis;
+                minutesLeft = "↓ " + Math.ceil(millisLeft / ONE_MIN_IN_MILLIS) + "m";
+                const millisLeftUntilNextMin = millisLeft % ONE_MIN_IN_MILLIS;
 
-                const timeoutDelay = millisLeftUntilNextMin + 1;
+                const timeoutDelay = millisLeftUntilNextMin + EXTRA_TIMEOUT_DELAY_IN_MS;
                 timeoutId = setTimeout(() => {
                     if (timerState.millisLeft <= 0 || timerState.state !== "running") {
                         return;
@@ -87,7 +104,7 @@ export default function RestTimer(props) {
         let millisLeft, resumeStartTime;
         switch (action) {
             case "play":
-                millisLeft = props.presets[props.selectedPresetIndex][1] * 60 * 1000;
+                millisLeft = props.presets[props.selectedPresetIndex][1] * ONE_MIN_IN_MILLIS;
                 setTimerState({
                     state: "running",
                     startTimeDate: new Date(),
@@ -96,7 +113,7 @@ export default function RestTimer(props) {
                 });
                 break;
             case "cancel":
-                millisLeft = props.presets[props.selectedPresetIndex][1] * 60 * 1000;
+                millisLeft = props.presets[props.selectedPresetIndex][1] * ONE_MIN_IN_MILLIS;
                 setTimerState({
                     state: "ready",
                     startTimeDate: null,
@@ -130,7 +147,8 @@ export default function RestTimer(props) {
         }
     };
 
-    const minutesLeft = Math.ceil(timerState.millisLeft / (60 * 1000));
+    const minutesLeft = Math.ceil(timerState.millisLeft / ONE_MIN_IN_MILLIS);
+    let timeLeftLevel = computeTimeLeftLevel(minutesLeft, props.presets[props.selectedPresetIndex][1]);
 
     return (
         <div className="rest-timer">
@@ -139,7 +157,7 @@ export default function RestTimer(props) {
                     minified={false}
                     icons={props.config.icons}
                     translations={props.config.translations}
-                    timeLeftLevel={100}
+                    timeLeftLevel={timeLeftLevel}
                 />
                 <TimeDisplay
                     icons={props.config.icons}
