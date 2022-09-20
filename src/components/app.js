@@ -8,6 +8,8 @@ import audio from "../config/Audio.js";
 import Config from "../models/Config.js";
 
 import RestTimer from "../components/RestTimer.jsx";
+import LocalStorageWrapper from "../utilities/LocalStorageWrapper.js";
+import TimerSettingsPersistenceManager from "../utilities/TimerSettingsPersistenceManager.js";
 
 function getDetectedLangCode(supportedLangCodes, defaultLangCode) {
     const navigatorLanguage = window.navigator.language;
@@ -20,34 +22,6 @@ function getDetectedLangCode(supportedLangCodes, defaultLangCode) {
         }
     }
     return defaultLangCode;
-}
-
-function readLocalStoragePresets() {
-    if (typeof window.localStorage === "undefined") {
-        return null;
-    }
-    const jsonStr = window.localStorage.getItem("presets");
-    if (!jsonStr) {
-        return null;
-    }
-    try {
-        return JSON.parse(jsonStr);
-    } catch (e) {
-        return null;
-    }
-}
-
-function saveLocalStoragePresets(presets) {
-    if (typeof window.localStorage === "undefined") {
-        return;
-    }
-    const jsonStr = JSON.stringify(presets);
-    try {
-        window.localStorage.setItem("presets", jsonStr);
-    } catch (e) {
-        console.error("Saving presets failed", e);
-        return;
-    }
 }
 
 function useAppState(supportedLangCodes, defaultLangCode, defaultPresets, defaultPresetIndex) {
@@ -68,7 +42,8 @@ function useAppState(supportedLangCodes, defaultLangCode, defaultPresets, defaul
         if (langCode !== detectedLangCode) {
             setLangCode(detectedLangCode);
             if (presets.defaultPresetsOn) {
-                const newPresets = TimerPresets.generateDefaultPresets(allTranslations[detectedLangCode]);
+                const newTranslations = allTranslations[detectedLangCode];
+                const newPresets = TimerPresets.generateDefaultPresets(newTranslations);
                 setPresets(presets => ({
                     ...presets,
                     collection: newPresets,
@@ -87,11 +62,14 @@ function useAppState(supportedLangCodes, defaultLangCode, defaultPresets, defaul
             return;
         }
 
-        const savedPresets = readLocalStoragePresets();
+        const localStorageWrapper = new LocalStorageWrapper();
+        const persistenceManager = new TimerSettingsPersistenceManager(localStorageWrapper);
+        const savedPresets = persistenceManager.readPresets();
         setLoading(loading => ({
             ...loading,
             localStorageRead: true,
         }));
+
         if (savedPresets === null) {
             return;
         }
@@ -132,7 +110,10 @@ export default function App() {
     };
 
     const onPresetCollectionChange = (newPresets) => {
-        saveLocalStoragePresets(newPresets);
+        const localStorageWrapper = new LocalStorageWrapper();
+        const persistenceManager = new TimerSettingsPersistenceManager(localStorageWrapper);
+        persistenceManager.savePresets(newPresets);
+
         setPresets({
             ...presets,
             collection: newPresets,
