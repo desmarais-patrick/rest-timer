@@ -181,7 +181,7 @@ onBlur removes spaces and extra zeroes.
 1. Code setup: run empty app locally ✅
 1. Skeleton of components (static) ✅
 1. Adapt styles for various resolutions ✅
-1. Interactivity:
+1. Implement interactivity ✅
    1. Player control and timer state ✅
    1. Preset selection and selected preset state ✅
    1. Time updates and time state ✅
@@ -191,8 +191,11 @@ onBlur removes spaces and extra zeroes.
    1. Edit settings and presets state ✅
    1. Language detection and loading state ✅
    1. Local storage, read & save presets and loading state ✅
+1. Code review
 1. Testing:
    - Features in Chrome
    - Other browsers on macOS and iOS
    - Disable JavaScript
    - Disable LocalStorage
+1. Bug fixes
+1. Publish
