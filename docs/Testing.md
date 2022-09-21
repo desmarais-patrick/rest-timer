@@ -142,6 +142,7 @@ Observations:
 Preconditions:
 
 - Browser feature for JavaScript is disabled
+  - Chrome: chrome://settings/content/javascript
 
 Steps:
 
@@ -150,13 +151,16 @@ Steps:
 
 Observations:
 
-- Message is displayed to explain app state
+- ~~Message is displayed to explain app state~~
+  - App is white, leaving as is for now, given general good experience with JavaScript on.
+    No need to reduce experience for the majority, given a small set of users.
 
 **TC-B.1.3. Local storage disabled**
 
 Preconditions:
 
 - Browser feature for local storage is disabled
+  - Chrome: chrome://settings/cookies (choose block all cookies)
 
 Steps:
 

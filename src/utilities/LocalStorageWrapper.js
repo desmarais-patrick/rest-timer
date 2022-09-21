@@ -1,5 +1,14 @@
 export default function LocalStorageWrapper() {
-    if (typeof window.localStorage === "undefined") {
+    let localStorageAvailable = true;
+    try {
+        if (typeof window.localStorage === "undefined") {
+            localStorageAvailable = false;
+        }
+    } catch (e) {
+        localStorageAvailable = false;
+    }
+
+    if (!localStorageAvailable) {
         return {
             read: (key) => { return null; },
             save: (key, value) => { return; },
