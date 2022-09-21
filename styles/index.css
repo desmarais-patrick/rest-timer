@@ -6,7 +6,36 @@ button span {
     font-size: 1rem;
 }
 
-@media screen and (min-width: 420px) {
+.container {
+    position: relative;
+}
+
+.content-container {
+    opacity: 0;
+    margin: 0 10%;
+}
+.content-container.loaded {
+    animation-name: fadeIn;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+
+    opacity: 1;
+}
+
+@keyframes fadeIn {
+  from {
+    transform: translateY(.3rem);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+@media screen and (min-width: 600px) {
     .container {
         display: flex;
         flex-direction: column;
@@ -16,15 +45,13 @@ button span {
     }
 
     .content-container {
-        display: flex;
-        flex-direction: column;
-        width: 380px;
-        margin-top: 50px;
+        width: 590px;
+        margin: 2rem 0;
         padding: 2rem;
         box-sizing: border-box;
 
-        border: 1px solid darkgrey;
-        border-radius: 4px;
+        border: 0.1rem solid #333;
+        border-radius: 2rem;
     }
 }
 
@@ -48,14 +75,16 @@ button span {
     width: 12rem;
 }
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 600px) {
     .icon-display {
         display: inline-block;
         width: 30%;
+        vertical-align: top;
+        padding: 0;
     }
 
     .icon-display img {
-        width: 7rem;
+        width: 9rem;
     }
 }
 
@@ -83,10 +112,12 @@ button span {
     width: 80%;
 }
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 600px) {
     .time-display {
         display: inline-block;
         width: 70%;
+        vertical-align: top;
+        padding-top: 1rem;
     }
 }
 
@@ -128,16 +159,17 @@ button span {
     font-size: 1rem;
     text-align: center;
 
-    border: 1px solid;
+    border: 0.1rem solid;
     border-radius: 2rem;
+    box-shadow: #aaa 0 .2rem .2rem 0;
 }
 
 .controls-display-control button img {
     display: block;
-    width: 1rem;
+    height: 1rem;
 
     position: absolute;
-    top: 1rem;
+    top: .95rem;
 }
 
 .controls-display-control button img {
@@ -157,7 +189,7 @@ button span {
     margin-right: .5rem;
 }
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 600px) {
     .controls-display {
         display: inline-block;
         width: 30%;
@@ -239,9 +271,18 @@ button span {
     width: 100%;
     padding: 0.75rem;
     border-radius: 2rem;
-    border: 1px solid #005B80;
+    border: 0.1rem solid #005B80;
     color: #005B80;
     background: #4DB3EA;
+    box-shadow: #aaa 0 .2rem .2rem 0;
+}
+.presets-action.selected button {
+    border-width: 0.3rem;
+    font-weight: bold;
+}
+
+.presets-action.selected button div {
+    margin-top: -.1rem;
 }
 
 .presets-action .presets-action-title {
@@ -251,7 +292,7 @@ button span {
     text-overflow: ellipsis;
 }
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 600px) {
     .presets-display {
         display: inline-block;
         width: 70%;
@@ -267,7 +308,7 @@ button span {
     }
 
     .presets-action button {
-        border-radius: 1rem;
+        border-radius: 2rem;
         height: 6.5rem;
     }
 
@@ -279,6 +320,12 @@ button span {
 /*******************
  Settings display
  *******************/
+
+.settings {
+    animation-name: fadeIn;
+    animation-duration: .5s;
+    animation-timing-function: ease-in-out;
+}
 
 .settings-header {
     margin-bottom: 1rem;
@@ -309,6 +356,17 @@ button span {
     margin-bottom: .5rem;
 }
 
+.settings-presets-item input {
+    box-sizing: border-box;
+    padding: 0.25rem 0.5rem;
+    height: 2rem;
+    
+    color: #333;
+    border-radius: 2rem;
+    border: 0.1rem solid #333;
+    box-shadow: #aaa 0 0.2rem 0.2rem 0;
+}
+
 .settings-form-action {
     display: inline-block;
     width: 50%;
@@ -325,8 +383,12 @@ button span {
 .settings-form-action button {
     width: 100%;
     height: 3rem;
+
+    background: #fff;
+    color: #333;
     border-radius: 2rem;
-    border: 1px solid;
+    border: 0.1rem solid #333;
+    box-shadow: #aaa 0 .2rem .2rem 0;
 
     position: relative;
 }
@@ -334,7 +396,8 @@ button span {
 .settings-form-action button img {
     position: absolute;
     height: 1rem;
-    top: 1rem;
+    top: .95rem;
+
     left: 1rem;
     right: auto;
 }
@@ -352,7 +415,7 @@ button span {
     margin-right: 1rem;
 }
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 600px) {
     .settings-form-action {
         width: auto;
     }

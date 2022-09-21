@@ -3,77 +3,129 @@ import React, { useState, useEffect } from "react";
 import allTranslations from "../config/Translations.js";
 import TimerPresets from "../config/TimerPresets.js";
 import icons from "../config/Icons.js";
+import audio from "../config/Audio.js";
 
-import Config from "../models/Config.js";
+import TimerConfigManager from "../utilities/TimerConfigManager.js";
+
+import LocalStorageWrapper from "../utilities/LocalStorageWrapper.js";
+import TimerSettingsPersistenceManager from "../utilities/TimerSettingsPersistenceManager.js";
 
 import RestTimer from "../components/RestTimer.jsx";
+import LanguageDetectionManager from "../utilities/LanguageDetectionManager.js";
 
-function useAppState(defaultLangCode, defaultPresets, defaultPresetIndex) {
+function useAppState(supportedLangCodes, defaultLangCode, defaultPresets, defaultPresetIndex) {
+    const [loading, setLoading] = useState({
+        languageDetected: false,
+        localStorageRead: false,
+    });
     const [langCode, setLangCode] = useState(defaultLangCode);
     const [presets, setPresets] = useState({
         collection: defaultPresets,
         defaultPresetsOn: true,
         selectedPresetIndex: defaultPresetIndex,
+        variationCount: 0,
     });
 
     useEffect(() => {
-        // Detect browser language.
-        const rand = Math.random() * 10;
-        const detectedLangCode = (rand < 5) ? "en" : "fr";
-
+        const languageDetection = new LanguageDetectionManager(supportedLangCodes, defaultLangCode);
+        const detectedLangCode = languageDetection.getDetectedLangCode();
         if (langCode !== detectedLangCode) {
             setLangCode(detectedLangCode);
             if (presets.defaultPresetsOn) {
-                const newPresets = TimerPresets.generateDefaultPresets(allTranslations[detectedLangCode]);
+                const newTranslations = allTranslations[detectedLangCode];
+                const newPresets = TimerPresets.generateDefaultPresets(newTranslations);
                 setPresets(presets => ({
                     ...presets,
                     collection: newPresets,
+                    variationCount: presets.variationCount + 1,
                 }));
             }
         }
-    }, [langCode]); // presets is not dependency once user edits it.
+        setLoading(loading => ({
+            ...loading,
+            languageDetected: true,
+        }));
+    }, [loading.languageDetected, langCode]); // presets is not a dependency once user edits it.
 
     useEffect(() => {
-        // Read saved presets.
-        const rand = Math.random() * 10;
-        const savedPresets = (rand < 5) ? null : [
-            ["A", 25, "Pomodoro"],
-            ["B", 5, "🏃🏻‍♂️💨"],
-            ["C", 15, "⌛️"]
-        ];
-
-        if (savedPresets === null) {
+        if (loading.localStorageRead) {
             return;
         }
 
-        setPresets(presets => ({
-            ...presets,
-            collection: savedPresets,
-            defaultPresetsOn: false,
-        }));
-    }, [presets]);
+        const localStorageWrapper = new LocalStorageWrapper();
+        const persistenceManager = new TimerSettingsPersistenceManager(localStorageWrapper);
+        const savedPresets = persistenceManager.readPresets();
+        if (savedPresets !== null) {
+            setPresets(presets => ({
+                ...presets,
+                collection: savedPresets,
+                defaultPresetsOn: false,
+                variationCount: presets.variationCount + 1,
+            }));
+        }
 
-    return { langCode, presets };
+        setLoading(loading => ({
+            ...loading,
+            localStorageRead: true,
+        }));
+    }, [loading.localStorageRead, presets]);
+
+    return { loading, langCode, presets, setPresets };
 }
 
 export default function App() {
+    const supportedLangCodes = Object.keys(allTranslations);
     const defaultLangCode = "en";
-    const defaultPresets = TimerPresets.generateDefaultPresets(allTranslations[defaultLangCode]);
+    const defaultTranslations = allTranslations[defaultLangCode];
+    const defaultPresets = TimerPresets.generateDefaultPresets(defaultTranslations);
     const defaultPresetIndex = 0;
-    const { langCode, presets } = useAppState(defaultLangCode, defaultPresets, defaultPresetIndex);
+    const { loading, langCode, presets, setPresets } = useAppState(supportedLangCodes, defaultLangCode, defaultPresets, defaultPresetIndex);
 
-    const config = new Config(allTranslations, defaultPresets, icons);
-    const timerConfig = config.generateConfig(langCode, defaultLangCode);
+    const configManager = new TimerConfigManager(allTranslations, defaultPresets, icons, audio);
+    const timerConfig = configManager.generateConfig(langCode);
 
+    const onSelectPreset = (newSelectedPresetId) => {
+        let newSelectedPresetIndex = 0;
+        presets.collection.forEach(([id], index) => {
+            if (newSelectedPresetId === id) {
+                newSelectedPresetIndex = index;
+            }
+        });
+        setPresets({
+            ...presets,
+            selectedPresetIndex: newSelectedPresetIndex,
+            variationCount: presets.variationCount + 1,
+        });
+    };
+
+    const onPresetCollectionChange = (newPresets) => {
+        const localStorageWrapper = new LocalStorageWrapper();
+        const persistenceManager = new TimerSettingsPersistenceManager(localStorageWrapper);
+        persistenceManager.savePresets(newPresets);
+
+        setPresets({
+            ...presets,
+            collection: newPresets,
+            defaultPresetsOn: false,
+            variationCount: presets.variationCount + 1,
+        });
+    };
+
+    const isLoadComplete = loading.languageDetected && loading.localStorageRead;
+    const containerClassName = isLoadComplete ? "content-container loaded" : "content-container";
     return (
         <div className="container">
-            <div className="content-container">
-                <RestTimer
+            <div className={containerClassName}>
+                <RestTimer key={presets.variationCount}
                     config={timerConfig}
                     presets={presets.collection}
-                    selectedPresetIndex={presets.selectedPresetIndex} />
-                <p className="footer">{timerConfig.translations["appTitle"].toUpperCase()}</p>
+                    selectedPresetIndex={presets.selectedPresetIndex}
+                    onSelectPreset={onSelectPreset}
+                    onPresetChange={onPresetCollectionChange} />
+                <p className="footer">
+                    {timerConfig.translations["appTitle"].toUpperCase()}
+                </p>
             </div>
-        </div>
+        </div >
     );
 }

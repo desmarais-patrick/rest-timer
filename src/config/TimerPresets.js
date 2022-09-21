@@ -7,7 +7,7 @@ const defaultPresets = [
 function applyTranslations(presets, translations) {
     return presets.map(([id, totalMinutes, translationKey]) => {
         const title = translations[translationKey] || translationKey;
-        // Leave key if translation is not found.
+        // Leave key as title if translation is not found.
         return [id, totalMinutes, title];
     });
 }
@@ -16,9 +16,9 @@ const generateDefaultPresets = (translations) => {
     return applyTranslations(defaultPresets, translations);
 }
 
-const Presets = {
+const TimerPresets = {
     applyTranslations,
     generateDefaultPresets,
 };
 
-export default Presets;
+export default TimerPresets;

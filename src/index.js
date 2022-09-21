@@ -5,5 +5,5 @@ import App from "./components/app";
 
 const container = document.getElementById("app");
 
-// To be used with server/server.js
+// To be used with `server/server.js`:
 ReactDOM.hydrateRoot(container, <App />);

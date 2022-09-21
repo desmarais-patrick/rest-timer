@@ -7,11 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev:server": "nodemon --exec babel-node src/server/server.js --ignore dist/",
     "debug:server": "babel-node src/server/server.js --ignore dist/ --inspect",
-    "dev:bundler": "npm run cleanup && npm run copyStatic && webpack -w --mode=development",
+    "dev:bundler": "npm run cleanup && npm run copyStatic && npm run copyAudio && webpack -w --mode=development",
     "cleanup": "rm -rf dist/ && mkdir dist/",
     "copyStatic": "npm run copyImages && npm run copyStyles",
     "copyImages": "cp -R images dist/",
-    "copyStyles": "cp -R styles dist/"
+    "copyStyles": "cp -R styles dist/",
+    "copyAudio": "cp -R audio dist/"
   },
   "author": "",
   "license": "ISC",
