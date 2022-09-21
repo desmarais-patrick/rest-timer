@@ -5,24 +5,13 @@ import TimerPresets from "../config/TimerPresets.js";
 import icons from "../config/Icons.js";
 import audio from "../config/Audio.js";
 
-import Config from "../models/Config.js";
+import TimerConfigManager from "../utilities/TimerConfigManager.js";
 
-import RestTimer from "../components/RestTimer.jsx";
 import LocalStorageWrapper from "../utilities/LocalStorageWrapper.js";
 import TimerSettingsPersistenceManager from "../utilities/TimerSettingsPersistenceManager.js";
 
-function getDetectedLangCode(supportedLangCodes, defaultLangCode) {
-    const navigatorLanguage = window.navigator.language;
-    let langRegExp;
-    let i = 0;
-    for (; i < supportedLangCodes.length; i++) {
-        langRegExp = new RegExp(`^${supportedLangCodes[i]}\\b`, "i");
-        if (langRegExp.test(navigatorLanguage)) {
-            return supportedLangCodes[i];
-        }
-    }
-    return defaultLangCode;
-}
+import RestTimer from "../components/RestTimer.jsx";
+import LanguageDetectionManager from "../utilities/LanguageDetectionManager.js";
 
 function useAppState(supportedLangCodes, defaultLangCode, defaultPresets, defaultPresetIndex) {
     const [loading, setLoading] = useState({
@@ -38,7 +27,8 @@ function useAppState(supportedLangCodes, defaultLangCode, defaultPresets, defaul
     });
 
     useEffect(() => {
-        const detectedLangCode = getDetectedLangCode(supportedLangCodes, defaultLangCode);
+        const languageDetection = new LanguageDetectionManager(supportedLangCodes, defaultLangCode);
+        const detectedLangCode = languageDetection.getDetectedLangCode();
         if (langCode !== detectedLangCode) {
             setLangCode(detectedLangCode);
             if (presets.defaultPresetsOn) {
@@ -55,7 +45,7 @@ function useAppState(supportedLangCodes, defaultLangCode, defaultPresets, defaul
             ...loading,
             languageDetected: true,
         }));
-    }, [loading.languageDetected, langCode]); // presets is not dependency once user edits it.
+    }, [loading.languageDetected, langCode]); // presets is not a dependency once user edits it.
 
     useEffect(() => {
         if (loading.localStorageRead) {
@@ -65,20 +55,18 @@ function useAppState(supportedLangCodes, defaultLangCode, defaultPresets, defaul
         const localStorageWrapper = new LocalStorageWrapper();
         const persistenceManager = new TimerSettingsPersistenceManager(localStorageWrapper);
         const savedPresets = persistenceManager.readPresets();
+        if (savedPresets !== null) {
+            setPresets(presets => ({
+                ...presets,
+                collection: savedPresets,
+                defaultPresetsOn: false,
+                variationCount: presets.variationCount + 1,
+            }));
+        }
+
         setLoading(loading => ({
             ...loading,
             localStorageRead: true,
-        }));
-
-        if (savedPresets === null) {
-            return;
-        }
-
-        setPresets(presets => ({
-            ...presets,
-            collection: savedPresets,
-            defaultPresetsOn: false,
-            variationCount: presets.variationCount + 1,
         }));
     }, [loading.localStorageRead, presets]);
 
@@ -86,14 +74,15 @@ function useAppState(supportedLangCodes, defaultLangCode, defaultPresets, defaul
 }
 
 export default function App() {
-    const defaultLangCode = "en";
-    const defaultPresets = TimerPresets.generateDefaultPresets(allTranslations[defaultLangCode]);
-    const defaultPresetIndex = 0;
     const supportedLangCodes = Object.keys(allTranslations);
+    const defaultLangCode = "en";
+    const defaultTranslations = allTranslations[defaultLangCode];
+    const defaultPresets = TimerPresets.generateDefaultPresets(defaultTranslations);
+    const defaultPresetIndex = 0;
     const { loading, langCode, presets, setPresets } = useAppState(supportedLangCodes, defaultLangCode, defaultPresets, defaultPresetIndex);
 
-    const config = new Config(allTranslations, defaultPresets, icons, audio);
-    const timerConfig = config.generateConfig(langCode, defaultLangCode);
+    const configManager = new TimerConfigManager(allTranslations, defaultPresets, icons, audio);
+    const timerConfig = configManager.generateConfig(langCode);
 
     const onSelectPreset = (newSelectedPresetId) => {
         let newSelectedPresetIndex = 0;
@@ -122,8 +111,8 @@ export default function App() {
         });
     };
 
-    const isLoaded = loading.languageDetected && loading.localStorageRead;
-    const containerClassName = isLoaded ? "content-container loaded" : "content-container";
+    const isLoadComplete = loading.languageDetected && loading.localStorageRead;
+    const containerClassName = isLoadComplete ? "content-container loaded" : "content-container";
     return (
         <div className="container">
             <div className={containerClassName}>
@@ -133,7 +122,9 @@ export default function App() {
                     selectedPresetIndex={presets.selectedPresetIndex}
                     onSelectPreset={onSelectPreset}
                     onPresetChange={onPresetCollectionChange} />
-                <p className="footer">{timerConfig.translations["appTitle"].toUpperCase()}</p>
+                <p className="footer">
+                    {timerConfig.translations["appTitle"].toUpperCase()}
+                </p>
             </div>
         </div >
     );
