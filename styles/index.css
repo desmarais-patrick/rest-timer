@@ -12,6 +12,7 @@ button span {
 
 .content-container {
     opacity: 0;
+    margin: 0 10%;
 }
 .content-container.loaded {
     animation-name: fadeIn;
@@ -34,7 +35,7 @@ button span {
 }
 
 
-@media screen and (min-width: 420px) {
+@media screen and (min-width: 600px) {
     .container {
         display: flex;
         flex-direction: column;
@@ -44,7 +45,7 @@ button span {
     }
 
     .content-container {
-        width: 380px;
+        width: 590px;
         margin: 2rem 0;
         padding: 2rem;
         box-sizing: border-box;
@@ -74,7 +75,7 @@ button span {
     width: 12rem;
 }
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 600px) {
     .icon-display {
         display: inline-block;
         width: 30%;
@@ -111,7 +112,7 @@ button span {
     width: 80%;
 }
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 600px) {
     .time-display {
         display: inline-block;
         width: 70%;
@@ -126,10 +127,6 @@ button span {
 
 .actions {
     margin-bottom: 2rem;
-
-    animation-name: fadeIn;
-    animation-duration: .5s;
-    animation-timing-function: ease-in-out;
 }
 
 /*******************
@@ -192,7 +189,7 @@ button span {
     margin-right: .5rem;
 }
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 600px) {
     .controls-display {
         display: inline-block;
         width: 30%;
@@ -295,7 +292,7 @@ button span {
     text-overflow: ellipsis;
 }
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 600px) {
     .presets-display {
         display: inline-block;
         width: 70%;
@@ -418,7 +415,7 @@ button span {
     margin-right: 1rem;
 }
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 600px) {
     .settings-form-action {
         width: auto;
     }
