@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ControlsDisplay from './ControlsDisplay.jsx';
 import IconDisplay from './IconDisplay.jsx';
 import PresetsDisplay from './PresetsDisplay.jsx';
@@ -37,12 +37,8 @@ function computeTimeLeftLevel(minutesLeft, totalTimerMinutes) {
     }
 }
 
-function playAudio(audioPath) {
-    const audio = new Audio(audioPath);
-    audio.play();
-}
-
 export default function RestTimer(props) {
+    const audioRef = useRef(null);
     const defaultMinutesLeft = props.presets[props.selectedPresetIndex][1];
     const defaultTimerDurationInMillis = defaultMinutesLeft * ONE_MIN_IN_MILLIS;
     const [timerState, setTimerState] = useState({
@@ -73,7 +69,7 @@ export default function RestTimer(props) {
                     const newState = newMillisLeft > 0 ? "running" : "end";
                     let audioPlayed = false;
                     if (newMillisLeft <= 0 && timerState.audioPlayed === false) {
-                        playAudio(props.config.audio["Tabla"]);
+                        audioRef.current.play();
                         audioPlayed = true;
                     }
                     setTimerState(timerState => ({
@@ -86,7 +82,7 @@ export default function RestTimer(props) {
             } else {
                 minutesLeft = "0m";
                 if (timerState.audioPlayed === false) {
-                    playAudio(props.config.audio["Tabla"]);
+                    audioRef.current.play();
                 }
                 setTimerState({
                     state: "end",
@@ -196,6 +192,12 @@ export default function RestTimer(props) {
                     icons={props.config.icons}
                     timerState={timerState.state}
                     minutesLeft={minutesLeft}
+                />
+                <audio
+                    ref={audioRef}
+                    src={props.config.audio["Tabla"]}
+                    autoPlay={false}
+                    loop={false}
                 />
             </div>
             {displayMode === "presets" &&
