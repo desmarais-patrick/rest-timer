@@ -23,7 +23,7 @@ button span {
 
 @keyframes fadeIn {
   from {
-    transform: translateY(.5rem);
+    transform: translateY(.3rem);
     opacity: 0;
   }
 
