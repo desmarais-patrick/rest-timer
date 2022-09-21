@@ -78,10 +78,12 @@ button span {
     .icon-display {
         display: inline-block;
         width: 30%;
+        vertical-align: top;
+        padding: 0;
     }
 
     .icon-display img {
-        width: 7rem;
+        width: 9rem;
     }
 }
 
@@ -113,6 +115,8 @@ button span {
     .time-display {
         display: inline-block;
         width: 70%;
+        vertical-align: top;
+        padding-top: 1rem;
     }
 }
 
@@ -122,6 +126,10 @@ button span {
 
 .actions {
     margin-bottom: 2rem;
+
+    animation-name: fadeIn;
+    animation-duration: .5s;
+    animation-timing-function: ease-in-out;
 }
 
 /*******************
@@ -315,6 +323,12 @@ button span {
 /*******************
  Settings display
  *******************/
+
+.settings {
+    animation-name: fadeIn;
+    animation-duration: .5s;
+    animation-timing-function: ease-in-out;
+}
 
 .settings-header {
     margin-bottom: 1rem;
