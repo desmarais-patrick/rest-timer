@@ -14,7 +14,7 @@
     "copyStyles": "cp -R styles dist/",
     "copyAudio": "cp -R audio dist/"
   },
-  "author": "",
+  "author": "desmarais-patrick",
   "license": "ISC",
   "dependencies": {
     "@babel/core": "^7.18.13",
