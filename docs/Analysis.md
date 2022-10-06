@@ -128,29 +128,53 @@ Functionality:
 1. Architecture design ✅
 1. Write test cases (first draft ✅)
 1. Tooling setup (ex. time tracking ✅, dev env ✅)
-1. Code (static prototype)
-1. Prepare and integrate assets (icons 🚥, media 🚥, etc.)
-1. Code (rest of features and functionality)
-1. Review test cases and test
-1. Fix bugs
-1. Tag version 1
-1. Retrospective
+1. Code (static prototype) ✅
+1. Prepare and integrate assets (icons, media, etc.) ✅
+1. Code (rest of features and functionality) ✅
+1. Review test cases and test ✅
+1. Fix bugs ✅
+1. Tag version 1 ✅
+1. Retrospective ✅
 
-**Time Tracking**
+### Time Tracking
 
-| Step                       | Time invested (h) |
-| -------------------------- | ----------------- |
-| Project initialization     | 1.25              |
-| User interface design      | 2.25              |
-| Architecture design        | 3                 |
-| Test cases                 | 0.25              |
-| Tooling setup              | 0.5               |
-| User interface assets      | 0.5               |
-| Extra (ex. tool debugging) | 1.25              |
+**Version 1.0**
 
-Total: 9 hours (2022-09-13 13:00)
+| Day | Step                                 | Time invested (h) |
+| --- | ------------------------------------ | ----------------- |
+| 1   | Project initialization               | 1.25              |
+| 1   | User interface design                | 2.25              |
+| 2   | Architecture design                  | 3                 |
+| 3   | Test cases                           | 0.25              |
+| 3   | Tooling setup                        | 0.5               |
+| 3   | User interface assets                | 0.5               |
+| 3   | Extra (ex. tool debugging)           | 1.25              |
+| 4   | Code: app skeleton (#1)              | 3.25              |
+| 4   | Extra (ex. tool debugging)           | 0.25              |
+| 5   | Code: app skeleton (#1)              | 4                 |
+| 6   | Code: interactivity (#2)             | 2.5               |
+| 7   | Code: interactivity (#2)             | 1.5               |
+| 8   | Code: interactivity (#2)             | 1.5               |
+| 9   | Code: interactivity (#2)             | 5                 |
+| 10  | Code review (#3)                     | 1                 |
+| 11  | Code review & testing (#3)           | 3                 |
+| 12  | Research for publishing              | 0.75              |
+| 13  | Record preview video and screenshots | 1                 |
+| 14  | Compile time on project              | 0.5               |
+
+Total: 35.5 hours (2022-09-29)
 
 Tool debugging:
 
 - Push to Github blocks when file > 1MB.
   Solution: reset commits, compress sketch image.
+- Safari doesn't support audio API loading without click.
+
+Time distribution:
+
+| Step                     | Time invested (h) | Bar                     |
+| ------------------------ | ----------------- | ----------------------- |
+| Analysis, research, docs | 3.5               | XXXX                    |
+| Design, architecture     | 5.25              | XXXXX                   |
+| Code, icons, styles      | 22.75             | XXXXXXXXXXXXXXXXXXXXXXX |
+| Quality, test, debugging | 4                 | XXXX                    |
